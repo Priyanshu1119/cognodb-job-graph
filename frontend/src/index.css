@@ -1,0 +1,339 @@
+:root {
+  --bg: #eef1ec;
+  --surface: #ffffff;
+  --surface-sunken: #e4e8e2;
+  --ink: #1c2321;
+  --ink-soft: #4d5751;
+  --line: #c9d1c7;
+  --line-strong: #a4afa0;
+  --pine: #3d6b5c;
+  --pine-deep: #294a40;
+  --amber: #c97b3d;
+  --amber-soft: #f0ded0;
+  --radius: 10px;
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--amber-soft);
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* ---------- Top bar ---------- */
+
+.topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px solid var(--line-strong);
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 22px;
+  height: 22px;
+}
+
+.topnav {
+  display: flex;
+  gap: 22px;
+  font-size: 14px;
+}
+
+.topnav a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  border-bottom: 1.5px solid transparent;
+  padding-bottom: 2px;
+}
+
+.topnav a.active,
+.topnav a:hover {
+  color: var(--pine-deep);
+  border-color: var(--pine);
+}
+
+/* ---------- Typography ---------- */
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+
+h1 { font-size: 34px; }
+h2 { font-size: 22px; }
+h3 { font-size: 17px; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pine);
+}
+
+.lede {
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.55;
+  max-width: 60ch;
+}
+
+/* ---------- Layout bits ---------- */
+
+.section {
+  margin-top: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 18px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.card:hover {
+  border-color: var(--pine);
+  transform: translateY(-1px);
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+
+.card-sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+
+.tag.matched {
+  background: var(--amber-soft);
+  color: #8a4a17;
+  border-color: #dcb181;
+}
+
+.score-badge {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--pine-deep);
+  background: #e2ece7;
+  border: 1px solid #b9d2c4;
+  padding: 2px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+/* ---------- Edge connector, the signature motif ---------- */
+
+.edge-list {
+  position: relative;
+  padding-left: 22px;
+  border-left: 1.5px dashed var(--line-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.edge-list .card {
+  position: relative;
+}
+
+.edge-list .card::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: 24px;
+  width: 20px;
+  height: 1.5px;
+  background: var(--line-strong);
+}
+
+/* ---------- States ---------- */
+
+.empty-state,
+.loading-state,
+.error-state {
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius);
+  padding: 28px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.error-state {
+  border-color: #c97b3d;
+  color: #8a4a17;
+  background: var(--amber-soft);
+  text-align: left;
+}
+
+.loading-state {
+  font-family: var(--font-mono);
+}
+
+/* ---------- Forms ---------- */
+
+.form-grid {
+  display: grid;
+  gap: 12px;
+  max-width: 520px;
+}
+
+label {
+  font-size: 13px;
+  color: var(--ink-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+input, textarea, select {
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 9px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--pine);
+  outline-offset: 1px;
+}
+
+.btn {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 7px;
+  border: 1px solid var(--pine-deep);
+  background: var(--pine);
+  color: #fff;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.btn:hover {
+  background: var(--pine-deep);
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--pine-deep);
+}
+
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.search-bar input {
+  flex: 1;
+}
+
+.skill-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .grid { grid-template-columns: 1fr; }
+}
