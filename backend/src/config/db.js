@@ -29,6 +29,27 @@ async function verifyConnection() {
   await d.verifyConnectivity();
 }
 
+// Neo4j returns large numbers as {low, high} Integer objects instead of
+// plain JS numbers, so we recursively convert them before sending JSON
+// to the frontend, otherwise React crashes trying to render an object.
+function cleanRecord(value) {
+  if (value === null || value === undefined) return value;
+  if (neo4j.isInt(value)) return value.toNumber();
+  if (Array.isArray(value)) return value.map(cleanRecord);
+  if (typeof value === "object") {
+    if (value.properties) {
+      // Neo4j Node/Relationship objects: flatten to just their properties
+      return cleanRecord(value.properties);
+    }
+    const result = {};
+    for (const key in value) {
+      result[key] = cleanRecord(value[key]);
+    }
+    return result;
+  }
+  return value;
+}
+
 // Every route goes through this helper so a session is always opened
 // and closed correctly, and driver errors turn into a clean JSON response
 // instead of crashing the process.
@@ -36,7 +57,7 @@ async function runQuery(cypher, params = {}) {
   const session = getDriver().session();
   try {
     const result = await session.run(cypher, params);
-    return result.records.map((r) => r.toObject());
+    return result.records.map((r) => cleanRecord(r.toObject()));
   } finally {
     await session.close();
   }
