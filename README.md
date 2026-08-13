@@ -154,6 +154,5 @@ Cypher via the official `neo4j-driver` package — no string concatenation.
 
 ## Demo
 
-- Hosted app: _add your deployed URL here_
-- Screen recording: _add your recording link here_
-- Screenshots: _add screenshots of the UI here_
+- Hosted app: https://cognodb-job-graph-frontend.onrender.com
+>> Build By Priyanshu Dubey
